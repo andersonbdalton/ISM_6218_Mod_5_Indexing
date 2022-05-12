@@ -1,0 +1,236 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2580
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww28300\viewh17700\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 --start of idea 3\
+\
+--DROP TABLE company_pay;\
+--DROP TABLE company_payid;\
+\
+CREATE TABLE Com_data(\
+first_name varchar(23)\
+);\
+\
+\
+\
+CREATE TABLE company_pay(\
+company varchar(50),\
+department varchar(50),\
+first_name varchar(50),\
+last_name varchar(50),\
+job_title varchar(100),\
+degree_level varchar(5),\
+pay int\
+\
+\
+);\
+\
+SELECT *\
+FROM company_pay;\
+\
+SELECT *\
+FROM company_payid;\
+\
+  \
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES ('mandrill', 'finace', 'hanna', 'riley', 'actuary', 'ph', 200000);\
+\
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES ('chameleon', 'distribution', 'meadow', 'burch', 'packer', 'hs', 20000);\
+\
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES ('horned ghost', 'research', 'summer', 'osborne', 'chemist', 'ph', 150000);\
+\
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES ('mandrill', 'operations', 'kyla', 'madden', 'logistician', 'bs', 100000);\
+\
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES ('chameleon', 'it', 'tara', 'santiago', 'business dev', 'bs', 95000);\
+\
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES ('horned_ghost', 'purchasing', 'ronin', 'cline', 'product analyst', 'bs', 75000);\
+\
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES ('mandrill', 'legal', 'karli', 'burke', 'lawyer', 'ld', 125000);\
+\
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES('chameleon', 'support', 'jaden', 'harmon', 'helpdesk', 'ba', 40000);\
+\
+INSERT INTO company_pay (company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES ('horned_ghost', 'admin', 'nathanial', 'foley', 'onboarder', 'ba', 35000);\
+\
+\
+\
+CREATE TABLE company_payid(\
+personid NUMBER PRIMARY KEY,\
+company varchar(50),\
+department varchar(50),\
+first_name varchar(50),\
+last_name varchar(50),\
+job_title varchar(100),\
+degree_level varchar(5),\
+pay int\
+\
+\
+);\
+\
+SELECT *\
+FROM company_payid;\
+\
+INSERT INTO company_payid (personid,company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES (1, 'mandrill', 'finace', 'hanna', 'riley', 'actuary', 'ph', 200000);\
+\
+INSERT INTO company_payid (personid, company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES (2, 'chameleon', 'distribution', 'meadow', 'burch', 'packer', 'hs', 20000);\
+\
+INSERT INTO company_payid (personid, company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES (3, 'horned ghost', 'research', 'summer', 'osborne', 'chemist', 'ph', 150000);\
+\
+INSERT INTO company_payid (personid, company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES (4, 'mandrill', 'operations', 'kyla', 'madden', 'logistician', 'bs', 100000);\
+\
+INSERT INTO company_payid (personid, company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES (5, 'chameleon', 'it', 'tara', 'santiago', 'business dev', 'bs', 95000);\
+\
+INSERT INTO company_payid (personid, company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES (6, 'horned_ghost', 'purchasing', 'ronin', 'cline', 'product analyst', 'bs', 75000);\
+\
+INSERT INTO company_payid (personid, company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES (7, 'mandrill', 'legal', 'karli', 'burke', 'lawyer', 'ld', 125000);\
+\
+INSERT INTO company_payid (personid, company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES(8, 'chameleon', 'support', 'jaden', 'harmon', 'helpdesk', 'ba', 40000);\
+\
+INSERT INTO company_payid (personid, company, department, first_name, last_name, job_title,\
+                        degree_level, pay\
+) \
+VALUES (9, 'horned_ghost', 'admin', 'nathanial', 'foley', 'onboarder', 'ba', 35000);\
+\
+SELECT *\
+FROM company_payid;\
+\
+CREATE INDEX company_names on company_pay ( first_name,last_name);\
+\
+SELECT * \
+FROM company_pay\
+WHERE first_name = 'hanna' AND last_name = 'riley';\
+\
+SELECT * \
+FROM company_payid\
+WHERE personid = 1;\
+\
+DROP TABLE company_pay;\
+DROP TABLE company_payid;\
+\
+--this is the first time for me using explain plan.\
+--I haven't been able download and run oracle sql dev till now.\
+--dbeaver doesn't allow writes.\
+--I am going to hand off my work to my peers for review, just note I had a hard time using explain plan.\
+--------------------------------------------------------------------------------------------------------end of idea 3--------------------------------------------------------------------------------------------------------------------------------------------------------------------\
+\
+\
+--idea 6 below\
+\
+\
+--users table\
+CREATE TABLE user_info (\
+userid NUMBER PRIMARY KEY,\
+user_name varchar(25),\
+country varchar(100),\
+age int,\
+gender varchar(50),\
+languages varchar(100),\
+pop_density_ht varchar(15),\
+degree_level varchar(5),\
+fav_director varchar(50),\
+fav_actor_acesses varchar(50)\
+\
+\
+);\
+\
+--genres\
+--would make userid a fk later\
+--seq would allow us to keep a users old genre preferences\
+CREATE TABLE user_genres(\
+userid int,\
+user_preferenceid NUMBER PRIMARY KEY,\
+user_name varchar(25),\
+genre varchar(25),\
+genre_ratings int,\
+seq (int)\
+\
+\
+);\
+\
+--user ratings\
+--would make userid a fk later\
+--would make movieid a fk later\
+--seq would allow us to keep a users old rating preferences\
+CREATE TABLE user_ratings(\
+userid int,\
+user_ratingid NUMBER PRIMARY KEY,\
+movieid int,\
+movie varchar(150),\
+rating int),\
+seq (int)\
+\
+\
+);\
+\
+--would make userid a fk later\
+--user questions\
+CREATE TABLE user_questions (\
+userid int,\
+responseid NUMBER PRIMARY KEY, \
+question1 varchar(200),\
+question2 varchar(200),\
+question3 varchar(200),\
+question4 varchar(200)\
+\
+);\
+\
+DROP TABLE user_info;\
+DROP TABLE user_genres;\
+DROP TABLE user_rating;\
+DROP TABLE user_questions;\
+\
+--this tables were modeled off of our movie survey\
+----------------------------------------------------------------------------------------------------------------end of idea 6---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\
+}

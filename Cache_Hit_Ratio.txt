@@ -1,0 +1,83 @@
+-- This script file has some more detailed queries
+-- that illustrate the concept of a cache hit ratio.
+-- Though focusing too much on cache hit ratios is
+-- probably a mistake, the fundamental concept of
+-- avoiding physical IO in favor of memory accesses
+-- is important to understand.
+-- dberndt@usf.edu
+
+
+-- First, take a look at some of the statistics
+-- avalable from the V$SYSSTAT view.
+-- Some of these same statistics are shown
+-- in SQL Developer (and Autotrace).
+-- The "consistent gets" are fetches of
+-- consistent or unmodified blocks
+-- (typically the bulk of the IO).
+-- The "db block gets" reflect a point-in-time
+-- retrieval of a 
+
+SELECT *
+FROM v$sysstat
+WHERE
+  name like 'consistent gets%' OR
+  name like 'db block gets%' OR
+  name like 'physical reads%';
+
+
+-- This query retrieves the relevant statistics
+-- for computing a cache hit ratio.
+-- The fetches "from cache" are reads from
+-- the database buffer cache (core shared memory).
+-- This is probably the best way to look at
+-- a cache hit ratio, though you could also
+-- retrieve the overall totals (as in next query).
+
+SELECT
+  name,
+  value
+FROM v$sysstat
+WHERE name IN
+  ('db block gets from cache',
+  'consistent gets from cache', 
+  'physical reads cache');
+
+SELECT
+  name,
+  value
+FROM v$sysstat
+WHERE name IN
+  ('db block gets',
+  'consistent gets', 
+  'physical reads');
+
+
+-- Compute the cache hit ratio using the formula:
+-- (1 - (physical_reads / (db_block_gets + consistent_gets))) * 100.
+
+SELECT
+  (1 - (v3.value / (v1.value + v2.value))) * 100
+FROM
+  v$sysstat v1,
+  v$sysstat v2,
+  v$sysstat v3
+WHERE
+  v1.NAME = 'db block gets from cache' AND
+  v2.NAME = 'consistent gets from cache' AND
+  v3.NAME = 'physical reads cache';
+
+
+-- Alternatively, We could use DECODE to gather
+-- the statistics and compute a cache hit ratio
+-- using the formula above.
+
+SELECT
+  SUM(DECODE(name, 'consistent gets', value, 0)) "Consistent Gets",
+	SUM(DECODE(name, 'db block gets', value, 0)) "DB Block Gets",
+	SUM(DECODE(name, 'physical reads', value, 0)) "Physical Reads",
+	ROUND(
+    (1 - (SUM(DECODE(name, 'physical reads', value, 0)) / 
+    (SUM(DECODE(name, 'db block gets', value, 0)) +
+    SUM(DECODE(name, 'consistent gets', value, 0)))))
+    * 100, 2) "Hit Ratio"
+FROM v$sysstat;

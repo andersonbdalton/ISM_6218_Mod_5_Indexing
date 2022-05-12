@@ -1,0 +1,66 @@
+-- This script file goes a bit further into
+-- indexing, using a composite index.
+-- In a composite or mult-column index,
+-- order matters with the B-tree built from
+-- left to right (so you need to use the
+-- left-most attributes in any queries).
+-- Composite indexes are more efficient for
+-- queries that use most of the columns,
+-- avoiding additional intersection computations
+-- necessary to combine single indexes.
+-- However, composite indexes are more targeted
+-- and will not support a wide range of queries.
+-- dberndt@usf.edu
+
+
+-- Step 1: Create a table in your account
+-- (if not already done) using a CTAS statement.
+-- Here we use the FANS table since it has
+-- some interesting columns for indexing.
+
+CREATE TABLE fans AS
+SELECT * FROM relmdb.fans;
+
+
+-- Step2: Create a composite index on the
+-- last name and first name columns.
+
+CREATE INDEX fans_lname_fname_btree
+ON fans (lname, fname);
+
+
+-- Step 3: Analyze the table to collect new statistics.
+
+ANALYZE TABLE fans COMPUTE STATISTICS;
+
+
+-- Step 4: Now run a query and look
+-- at the trance and execution plan.
+-- What is the performance in terms of
+-- block I/O (or consistent gets)?
+
+SELECT
+	fname,
+	lname,
+	zip
+FROM
+	fans
+WHERE
+	(lname LIKE 'SMITH') AND
+	(fname LIKE 'JOHN');
+
+
+-- As a follow-on in your own experiments,
+-- compare this composite index with two
+-- single indexes or even no index.
+-- How does the performance change?
+
+-- In addition, try using the wildcard
+-- ("%") in string matching and see how
+-- that changes index usage.
+-- The optimizer must estimate the range
+-- of strings that match any patterns,
+-- which is a tricky problem!
+
+
+

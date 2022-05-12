@@ -1,0 +1,40 @@
+CREATE TABLE casts AS
+SELECT * FROM RELMDB.casts;
+
+SELECT *
+FROM casts
+WHERE cast_member LIKE 'Harrison Ford';
+
+CREATE INDEX cast_member_btree
+ON casts (cast_member);
+
+
+CREATE TABLE movies AS
+SELECT * FROM RELMDB.movies;
+
+SELECT film_title
+FROM movies
+WHERE imdb_rank = 50;
+
+CREATE INDEX movies_imdb_rank_btree
+ON movies (imdb_rank);
+
+CREATE TABLE beers AS
+SELECT * FROM beerdb.beers;
+
+SELECT beer_name
+FROM beers
+WHERE style_id = 42;
+
+CREATE INDEX beers_style_id_btree
+ON beers (style_id);
+
+CREATE INDEX beers_abv_btree
+ON beers (abv);
+
+
+SELECT beer_name
+FROM beers
+WHERE abv = 7.5;
+
+
